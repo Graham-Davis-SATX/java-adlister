@@ -7,6 +7,8 @@ public class JDBCtest {
     public static void main(String[] args) {
         try {
 
+            // ======================== CREATING THE DRIVER and CONNECTION OBJECTS
+
             DriverManager.registerDriver(new Driver());
 
             Connection conn = DriverManager.getConnection(
@@ -16,7 +18,12 @@ public class JDBCtest {
             );
 
 
+            // ======================== CREATING A STATEMENT OBJECT
+
             Statement statement = conn.createStatement();
+
+
+            // ======================== GETTING A SINGLE AND LIST OF RESULTS
 
             String query = "SELECT * FROM albums";
 
@@ -24,13 +31,26 @@ public class JDBCtest {
 
             rs.next();
 
-//            System.out.println(rs.getString(1));
-//            System.out.println(rs.getString(2));
-//            System.out.println(rs.getString(3));
-//            System.out.println(rs.getString(4));
-//            System.out.println(rs.getString(5));
-//            System.out.println(rs.getString(6));
+            System.out.println(rs.getString(1));
+            System.out.println(rs.getString(2));
+            System.out.println(rs.getString(3));
+            System.out.println(rs.getString(4));
+            System.out.println(rs.getString(5));
+            System.out.println(rs.getString(6));
 
+            rs.beforeFirst(); // also rs.previous()
+
+            while (rs.next()) {
+                System.out.println("===================");
+                System.out.println(rs.getString("id"));
+                System.out.println(rs.getString("artist"));
+                System.out.println(rs.getString("name"));
+                System.out.println(rs.getString("release_date"));
+                System.out.println(rs.getString("sales"));
+                System.out.println(rs.getString("genre"));
+            }
+
+            // ======================== GETTING METADATA
 
             ResultSetMetaData rsmd = rs.getMetaData();
             int colCount = rsmd.getColumnCount();
@@ -38,7 +58,7 @@ public class JDBCtest {
                 System.out.println(rsmd.getColumnName(i));
             }
 
-        // use Album model
+            // ======================== ALBUM MODEL
 
             rs.beforeFirst();
             rs.next();
@@ -57,7 +77,7 @@ public class JDBCtest {
             System.out.println(album.getReleaseDate());
             System.out.println(album.getReleaseDate());
 
-            // update album record
+            // ======================== UPDATE A RECORD
 
             Album updateAlbum = new Album(
                     2,
@@ -80,7 +100,7 @@ public class JDBCtest {
             boolean success = statement.execute(updateQuery);
             int numberOfRowsEffected = statement.executeUpdate(updateQuery);
 
-            // insert album
+            // ======================== INSERTING A RECORD
 
             Album brandNewAlbum = new Album(
                 "The Cure",
