@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "empServlet", urlPatterns = "/employees")
+@WebServlet(name = "empServlet", urlPatterns = "/employees/index")
 public class EmployeesIndexServlet extends HttpServlet {
 
     Employees employeesDao = DaoFactory.getEmployeesDao();
@@ -28,7 +28,7 @@ public class EmployeesIndexServlet extends HttpServlet {
 
         req.setAttribute("peopleHired", peopleHired);
 
-        req.getRequestDispatcher("employees/index.jsp").forward(req, resp);
+        req.getRequestDispatcher("/employees/index.jsp").forward(req, resp);
 
     }
 }
