@@ -44,11 +44,11 @@ public class JDBCtest {
             rs.next();
 
             Album album = new Album(rs.getLong("id"),
-                    rs.getString("artist"),
-                    rs.getString("name"),
-                    rs.getDate("release_date").toLocalDate(),
-                    rs.getDouble("sales"),
-                    rs.getString("genre")
+                rs.getString("artist"),
+                rs.getString("name"),
+                rs.getInt("release_date"),
+                rs.getDouble("sales"),
+                rs.getString("genre")
             );
 
             System.out.println(album.getId());
@@ -59,6 +59,51 @@ public class JDBCtest {
 
             // update album record
 
+            Album updateAlbum = new Album(
+                    2,
+                    "Deftones",
+                    "White Pony",
+                    2000,
+                    10,
+                    "alt, metal"
+            );
+
+            String updateQuery = String.format("UPDATE albums SET artist = '%s', name = '%s', release_date = %d, sales = %f, genre = '%s' WHERE id = %d",
+                    updateAlbum.getArtist(),
+                    updateAlbum.getName(),
+                    updateAlbum.getReleaseDate(),
+                    updateAlbum.getSales(),
+                    updateAlbum.getGenre(),
+                    updateAlbum.getId()
+            );
+
+            boolean success = statement.execute(updateQuery);
+            int numberOfRowsEffected = statement.executeUpdate(updateQuery);
+
+            // insert album
+
+            Album brandNewAlbum = new Album(
+                "The Cure",
+                "Disintegration",
+                1989,
+                15,
+                "alt, goth, rock"
+            );
+
+            String insertQuery = String.format("INSERT INTO albums (artist, name, release_date, sales, genre) VALUES ('%s', '%s', %d, %f, '%s')",
+                brandNewAlbum.getArtist(),
+                brandNewAlbum.getName(),
+                brandNewAlbum.getReleaseDate(),
+                brandNewAlbum.getSales(),
+                brandNewAlbum.getGenre()
+            );
+
+            statement.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            rs = statement.getGeneratedKeys();
+
+            if (rs.next()) {
+                System.out.println("Inserted id is: " + rs.getLong(1));
+            }
 
 
         } catch (SQLException e) {

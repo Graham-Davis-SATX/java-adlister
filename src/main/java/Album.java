@@ -7,13 +7,13 @@ public class Album implements Serializable {
     private long id;
     private String artist;
     private String name;
-    private LocalDate releaseDate;
+    private int releaseDate;
     private double sales;
     private String genre;
 
     public Album() {}
 
-    public Album(String artist, String name, LocalDate releaseDate, double sales, String genre) {
+    public Album(String artist, String name, int releaseDate, double sales, String genre) {
         this.artist = artist;
         this.name = name;
         this.releaseDate = releaseDate;
@@ -21,7 +21,7 @@ public class Album implements Serializable {
         this.genre = genre;
     }
 
-    public Album(long id, String artist, String name, LocalDate releaseDate, double sales, String genre) {
+    public Album(long id, String artist, String name, int releaseDate, double sales, String genre) {
         this.id = id;
         this.artist = artist;
         this.name = name;
@@ -54,11 +54,11 @@ public class Album implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getReleaseDate() {
+    public int getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(int releaseDate) {
         this.releaseDate = releaseDate;
     }
 
