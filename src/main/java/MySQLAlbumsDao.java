@@ -12,9 +12,9 @@ public class MySQLAlbumsDao implements Albums {
         try {
             DriverManager.registerDriver(new Driver());
             this.conn = DriverManager.getConnection(
-                config.getUrl(),
-                config.getUser(),
-                config.getPass()
+                    config.getUrl(),
+                    config.getUser(),
+                    config.getPass()
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,14 +44,14 @@ public class MySQLAlbumsDao implements Albums {
         List<Album> albums = new ArrayList<>();
         while(rs.next()) {
             albums.add(
-                new Album(
-                    rs.getLong("id"),
-                    rs.getString("artist"),
-                    rs.getString("name"),
-                    rs.getInt("release_date"),
-                    rs.getDouble("sales"),
-                    rs.getString("genre")
-                )
+                    new Album(
+                            rs.getLong("id"),
+                            rs.getString("artist"),
+                            rs.getString("name"),
+                            rs.getInt("release_date"),
+                            rs.getDouble("sales"),
+                            rs.getString("genre")
+                    )
             );
         }
         return albums;
