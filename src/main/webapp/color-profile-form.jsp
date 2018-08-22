@@ -16,11 +16,11 @@
     <form action="/color-profile" method="POST">
         <div>
             <label for="background">Preferred Background Color</label>
-            <input id="background" type="color" name="background" value="">
+            <input id="background" type="color" name="background" value="${sessionScope.background}">
         </div>
         <div>
             <label for="font-color">Preferred Font Color</label>
-            <input id="font-color" type="color" name="font-color" value="">
+            <input id="font-color" type="color" name="font-color" value="${sessionScope.fontColor}">
         </div>
         <button>Submit</button>
     </form>

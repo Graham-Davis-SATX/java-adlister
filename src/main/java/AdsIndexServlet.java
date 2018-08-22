@@ -9,11 +9,11 @@ import java.util.List;
 @WebServlet(name = "AdsIndexServlet", urlPatterns = "/ads")
 public class AdsIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute("background") == null) {
+        if (request.getSession().getAttribute("background") != null && request.getSession().getAttribute("fontColor") != null) {
+            request.setAttribute("ads", DaoFactory.getAdsDao().all());
+            request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
+        } else {
             response.sendRedirect("/color-profile");
-            return;
         }
-        request.setAttribute("ads", DaoFactory.getAdsDao().all());
-        request.getRequestDispatcher("/ads/index.jsp").forward(request, response);
     }
 }
