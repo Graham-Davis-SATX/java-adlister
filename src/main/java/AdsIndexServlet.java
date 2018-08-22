@@ -9,6 +9,10 @@ import java.util.List;
 @WebServlet(name = "AdsIndexServlet", urlPatterns = "/ads")
 public class AdsIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getSession().getAttribute("background") == null) {
+            response.sendRedirect("/color-profile");
+            return;
+        }
         request.setAttribute("ads", DaoFactory.getAdsDao().all());
         request.getRequestDispatcher("/ads/index.jsp").forward(request, response);
     }
