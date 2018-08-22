@@ -7,8 +7,6 @@
         <jsp:param name="title" value="Please Log In" />
     </jsp:include>
 
-    <%@include file="partials/color-profile.jsp"%>
-
 </head>
 <body>
     <h1>${sessionScope.background}</h1>
