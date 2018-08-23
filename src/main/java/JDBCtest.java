@@ -81,11 +81,11 @@ public class JDBCtest {
 
             Album updateAlbum = new Album(
                     2,
-                    "Deftones",
-                    "White Pony",
-                    2000,
-                    10,
-                    "alt, metal"
+                    "Prince",
+                    "Purple Rain",
+                    1984,
+                    50,
+                    "amazing"
             );
 
             String updateQuery = String.format("UPDATE albums SET artist = '%s', name = '%s', release_date = %d, sales = %f, genre = '%s' WHERE id = %d",
