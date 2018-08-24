@@ -1,5 +1,6 @@
 package com.codeup.adlister;
 
+import com.codeup.adlister.models.Album;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
@@ -23,74 +24,92 @@ public class PreparedStatementsTest {
             // ======================== PREPARED SEARCH
 
             Scanner sc = new Scanner(System.in);
+            System.out.println("Please enter an album name:");
+            String name = sc.nextLine();
 
-            String id = sc.nextLine();
+            // !!!!!!!!!!!!! EXTREME DANGER !!!!!!!!!!!!!
+                // Sgt. Pepper's Lonely Hearts Club Band
+                // Thriller' OR 1 = '1
+                // Thriller' UNION SELECT *, null, null FROM users WHERE 1 = '1
 
-            String searchQuery = "SELECT * FROM albums WHERE id = " + id;
-            PreparedStatement ps = conn.prepareStatement(searchQuery);
-
-            String query = "SELECT * FROM albums";
-
-            ResultSet rs = statement.executeQuery(query);
-
-            rs.next();
-
-            System.out.println(rs.getString(1));
-            System.out.println(rs.getString(2));
-            System.out.println(rs.getString(3));
-            System.out.println(rs.getString(4));
-            System.out.println(rs.getString(5));
-            System.out.println(rs.getString(6));
+//                String searchQuery = "SELECT * FROM albums WHERE name = '" + name + "'";
+//                PreparedStatement ps = conn.prepareStatement(searchQuery);
+//                ResultSet rs = ps.executeQuery();
+//
+//                while (rs.next()) {
+//                    System.out.println(rs.getString(1));
+//                    System.out.println(rs.getString(2));
+//                    System.out.println(rs.getString(3));
+//                    System.out.println(rs.getString(4));
+//                    System.out.println(rs.getString(5));
+//                    System.out.println(rs.getString(6));
+//                }
 
 
+            // !!! DUE DILIGENCE !!!
 
-            // ======================== UPDATE A RECORD
+//                String safeSearchQuery = "SELECT * FROM albums WHERE name = ?";
+//                PreparedStatement ps = conn.prepareStatement(safeSearchQuery);
+//                ps.setString(1, name);
+//                ResultSet rs = ps.executeQuery();
+//
+//                while (rs.next()) {
+//                    System.out.println(rs.getString(1));
+//                    System.out.println(rs.getString(2));
+//                    System.out.println(rs.getString(3));
+//                    System.out.println(rs.getString(4));
+//                    System.out.println(rs.getString(5));
+//                    System.out.println(rs.getString(6));
+//                }
 
-            Album updateAlbum = new Album(
-                    2,
-                    "Prince",
-                    "Purple Rain",
-                    1984,
-                    50,
-                    "amazing"
-            );
 
-            String updateQuery = String.format("UPDATE albums SET artist = '%s', name = '%s', release_date = %d, sales = %f, genre = '%s' WHERE id = %d",
-                    updateAlbum.getArtist(),
-                    updateAlbum.getName(),
-                    updateAlbum.getReleaseDate(),
-                    updateAlbum.getSales(),
-                    updateAlbum.getGenre(),
-                    updateAlbum.getId()
-            );
+            // ======================== UPDATE REFACTOR
 
-            boolean success = statement.execute(updateQuery);
-            int numberOfRowsEffected = statement.executeUpdate(updateQuery);
+//            Album updateAlbum = new Album(
+//                    2,
+//                    "Prince",
+//                    "Purple Rain",
+//                    1984,
+//                    50,
+//                    "amazing"
+//            );
+//
+//            String updateQuery = String.format("UPDATE albums SET artist = '%s', name = '%s', release_date = %d, sales = %f, genre = '%s' WHERE id = %d",
+//                    updateAlbum.getArtist(),
+//                    updateAlbum.getName(),
+//                    updateAlbum.getReleaseDate(),
+//                    updateAlbum.getSales(),
+//                    updateAlbum.getGenre(),
+//                    updateAlbum.getId()
+//            );
+//
+//            boolean success = statement.execute(updateQuery);
+//            int numberOfRowsEffected = statement.executeUpdate(updateQuery);
 
-            // ======================== INSERTING A RECORD
+            // ======================== INSERTING REFACTOR
 
-            Album brandNewAlbum = new Album(
-                    "The Cure",
-                    "Disintegration",
-                    1989,
-                    15,
-                    "alt, goth, rock"
-            );
-
-            String insertQuery = String.format("INSERT INTO albums (artist, name, release_date, sales, genre) VALUES ('%s', '%s', %d, %f, '%s')",
-                    brandNewAlbum.getArtist(),
-                    brandNewAlbum.getName(),
-                    brandNewAlbum.getReleaseDate(),
-                    brandNewAlbum.getSales(),
-                    brandNewAlbum.getGenre()
-            );
-
-            statement.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
-            rs = statement.getGeneratedKeys();
-
-            if (rs.next()) {
-                System.out.println("Inserted id is: " + rs.getLong(1));
-            }
+//            Album brandNewAlbum = new Album(
+//                    "The Cure",
+//                    "Disintegration",
+//                    1989,
+//                    15,
+//                    "alt, goth, rock"
+//            );
+//
+//            String insertQuery = String.format("INSERT INTO albums (artist, name, release_date, sales, genre) VALUES ('%s', '%s', %d, %f, '%s')",
+//                    brandNewAlbum.getArtist(),
+//                    brandNewAlbum.getName(),
+//                    brandNewAlbum.getReleaseDate(),
+//                    brandNewAlbum.getSales(),
+//                    brandNewAlbum.getGenre()
+//            );
+//
+//            statement.executeUpdate(insertQuery, Statement.RETURN_GENERATED_KEYS);
+//            rs = statement.getGeneratedKeys();
+//
+//            if (rs.next()) {
+//                System.out.println("Inserted id is: " + rs.getLong(1));
+//            }
 
 
         } catch (SQLException e) {
