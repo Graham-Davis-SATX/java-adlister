@@ -14,7 +14,7 @@ public class PreparedStatementsTest {
             // ======================== CREATING THE DRIVER and CONNECTION OBJECTS
 
             DriverManager.registerDriver(new Driver());
-            Config config = new Config();
+//            Config config = new Config();
             Connection conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost/codeup_test_db?serverTimezone=UTC&useSSL=false",
                     "root",
@@ -23,17 +23,18 @@ public class PreparedStatementsTest {
 
             // ======================== PREPARED SEARCH
 
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Please enter an album name:");
-            String name = sc.nextLine();
+//            Scanner sc = new Scanner(System.in);
+//            System.out.println("Please enter an album name:");
+//            String name = sc.nextLine();
 
             // !!!!!!!!!!!!! EXTREME DANGER !!!!!!!!!!!!!
                 // Sgt. Pepper's Lonely Hearts Club Band
                 // Thriller' OR 1 = '1
                 // Thriller' UNION SELECT *, null, null FROM users WHERE 1 = '1
 
-//                String searchQuery = "SELECT * FROM albums WHERE name = '" + name + "'";
+//                String searchQuery = "SELECT * FROM albums WHERE name = ?";
 //                PreparedStatement ps = conn.prepareStatement(searchQuery);
+//                ps.setString(1, name);
 //                ResultSet rs = ps.executeQuery();
 //
 //                while (rs.next()) {
@@ -65,26 +66,31 @@ public class PreparedStatementsTest {
 
             // ======================== UPDATE REFACTOR
 
-//            Album updateAlbum = new Album(
-//                    2,
-//                    "Prince",
-//                    "Purple Rain",
-//                    1984,
-//                    50,
-//                    "amazing"
-//            );
-//
-//            String updateQuery = String.format("UPDATE albums SET artist = '%s', name = '%s', release_date = %d, sales = %f, genre = '%s' WHERE id = %d",
-//                    updateAlbum.getArtist(),
-//                    updateAlbum.getName(),
-//                    updateAlbum.getReleaseDate(),
-//                    updateAlbum.getSales(),
-//                    updateAlbum.getGenre(),
-//                    updateAlbum.getId()
-//            );
-//
-//            boolean success = statement.execute(updateQuery);
-//            int numberOfRowsEffected = statement.executeUpdate(updateQuery);
+            Album updateAlbum = new Album(
+                    2,
+                    "Hanson",
+                    "asdfasdf",
+                    0000,
+                    0,
+                    "awful"
+            );
+
+
+            String updateQuery = "UPDATE albums SET artist = ?, name = ?, release_date = ?, sales = ?, genre = ? WHERE id = ?";
+
+
+            PreparedStatement ps = conn.prepareStatement(updateQuery);
+
+            ps.setString(1, updateAlbum.getArtist());
+            ps.setString(2, updateAlbum.getName());
+            ps.setInt(3, updateAlbum.getReleaseDate());
+            ps.setDouble(4, updateAlbum.getSales());
+            ps.setString(5, updateAlbum.getGenre());
+            ps.setLong(6, updateAlbum.getId());
+
+            int numberOfRowsEffected = ps.executeUpdate();
+
+
 
             // ======================== INSERTING REFACTOR
 
