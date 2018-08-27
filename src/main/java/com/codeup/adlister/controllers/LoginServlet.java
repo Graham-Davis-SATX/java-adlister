@@ -28,7 +28,6 @@ public class LoginServlet extends HttpServlet {
         if(DaoFactory.getUsersDao().findByUsername(username) != null
                 && DaoFactory.getUsersDao().findByUsername(username).getPassword().equals(password)) {
             User user = new User(username, password);
-//            DaoFactory.getUsersDao().insert(user);
             request.getSession().setAttribute("user", user);
             response.sendRedirect("/profile");
         } else {
