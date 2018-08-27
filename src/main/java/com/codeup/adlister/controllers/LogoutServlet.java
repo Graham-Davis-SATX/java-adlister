@@ -1,3 +1,4 @@
+
 package com.codeup.adlister.controllers;
 
 import javax.servlet.annotation.WebServlet;
@@ -14,3 +15,4 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("/login");
     }
 }
+
